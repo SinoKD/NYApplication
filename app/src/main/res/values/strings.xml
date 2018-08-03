@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">NyApplication</string>
+    <string name="title_hint_label">Title</string>
+    <string name="author_label_hint">Author</string>
+</resources>

@@ -1,0 +1,18 @@
+package com.nyapplication.di;
+
+import com.nyapplication.ui.article_list.ArticleListActivity;
+import com.nyapplication.ui.article_list.di.ArticleListModule;
+
+import dagger.Module;
+import dagger.android.ContributesAndroidInjector;
+
+/**
+ * Created by Sino on 1/16/18.
+ */
+
+@Module
+public abstract class ActivityBuilder {
+
+    @ContributesAndroidInjector(modules = ArticleListModule.class)
+    abstract ArticleListActivity bindMainActivity();
+}
