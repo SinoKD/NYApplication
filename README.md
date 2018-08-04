@@ -42,3 +42,8 @@ The application make use of MPV architecture pattern.
 
 ## Unit Testing
 Unit test using android Mockito Framework.
+
+License
+-------
+
+Please refer to the [LICENSE](https://github.com/SinoKD/NyApplication/blob/master/LICENSE) at the root of this repo.
