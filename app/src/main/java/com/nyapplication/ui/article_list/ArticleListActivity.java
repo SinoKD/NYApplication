@@ -1,41 +1,69 @@
 package com.nyapplication.ui.article_list;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.DividerItemDecoration;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LayoutAnimationController;
+import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.nyapplication.R;
 import com.nyapplication.data_models.Article;
 import com.nyapplication.ui.Base.BaseDaggerActivity;
+import com.nyapplication.ui.article_details.ArticleDetails;
+import com.nyapplication.ui.componets.ItemOffsetDecoration;
 
 import java.util.ArrayList;
 
 import javax.inject.Inject;
 
-public class ArticleListActivity extends BaseDaggerActivity implements IArticleView {
+public class ArticleListActivity extends BaseDaggerActivity implements IArticleView, SwipeRefreshLayout.OnRefreshListener {
 
     @Inject
     ArticleViewPresenter articleViewPresenter;
 
     private RecyclerView recyclerView;
     private LinearLayoutManager mLayoutManager;
+    private SwipeRefreshLayout swipeRefreshLayout;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_article_list);
 
+        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.ll_swipe_refresh);
+        swipeRefreshLayout.setOnRefreshListener(this);
         recyclerView = (RecyclerView) findViewById(R.id.article_list);
         //tvEmptyHint = (TextView) view.findViewById(R.id.empty_view);
         recyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(mLayoutManager);
 
-        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(this, DividerItemDecoration.HORIZONTAL);
-        recyclerView.addItemDecoration(dividerItemDecoration);
+        final int spacing = getResources().getDimensionPixelOffset(R.dimen.default_spacing_small);
+        recyclerView.addItemDecoration(new ItemOffsetDecoration(spacing));
         articleViewPresenter.loadArticleList();
+
+        recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(this, recyclerView, new RecyclerItemClickListener.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(View view, int position) {
+                Toast.makeText(getApplicationContext(), "position:-" + position, Toast.LENGTH_SHORT).show();
+
+                articleViewPresenter.onItemClicked(position);
+            }
+
+            @Override
+            public void onLongItemClick(View view, int position) {
+
+            }
+        }));
     }
 
     @Override
@@ -44,11 +72,39 @@ public class ArticleListActivity extends BaseDaggerActivity implements IArticleV
 
         ArticleListAdapter articleListAdapter = new ArticleListAdapter(this, articles);
         recyclerView.setAdapter(articleListAdapter);
+        runLayoutAnimation(recyclerView);
+    }
+
+    @Override
+    public void startArticleDetailsActivity(Article article) {
+
+        Intent articleDetailsIntent = new Intent(this, ArticleDetails.class);
+        articleDetailsIntent.putExtra("Article", new Gson().toJson(article));
+        startActivity(articleDetailsIntent);
     }
 
     @Override
     protected void onDestroy() {
         articleViewPresenter.onDestroy();
         super.onDestroy();
+    }
+
+    private void runLayoutAnimation(final RecyclerView recyclerView) {
+        final Context context = recyclerView.getContext();
+
+        final LayoutAnimationController controller =
+                AnimationUtils.loadLayoutAnimation(context, R.anim.layout_fall_down_animation);
+
+        recyclerView.setLayoutAnimation(controller);
+        recyclerView.getAdapter().notifyDataSetChanged();
+        recyclerView.scheduleLayoutAnimation();
+    }
+
+    @Override
+    public void onRefresh() {
+        swipeRefreshLayout.setRefreshing(false);
+        if (articleViewPresenter != null)
+            articleViewPresenter.loadArticleList();
+
     }
 }

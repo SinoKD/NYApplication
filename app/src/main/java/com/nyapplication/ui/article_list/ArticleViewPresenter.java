@@ -1,17 +1,11 @@
 package com.nyapplication.ui.article_list;
 
-import android.util.Log;
-
-import com.google.gson.JsonElement;
 import com.nyapplication.data_models.Article;
 import com.nyapplication.data_models.ArticleListResponse;
 import com.nyapplication.data_models.Error;
-import com.nyapplication.ui.Base.IBaseAPIService;
 import com.nyapplication.ui.Base.IBasePresenter;
 import com.nyapplication.ui.Base.IBaseView;
 import com.nyapplication.web_service.ApiClient;
-
-import org.json.JSONException;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -28,13 +22,15 @@ import static com.nyapplication.Utility.AppConstants.APIConstants.API_KEY;
  * @author Sino K D
  * @since 8/3/18.
  */
-public class ArticleViewPresenter implements IBaseAPIService, IBasePresenter, ArticleViewContract {
+public class ArticleViewPresenter implements IBasePresenter, ArticleViewContract {
 
     private WeakReference<IBaseView> view;
 
     public ArticleViewPresenter(IBaseView view) {
         this.view = new WeakReference<IBaseView>(view);
     }
+
+    private ArrayList<Article> articlesList;
 
     @Override
     public void loadArticleList() {
@@ -43,6 +39,7 @@ public class ArticleViewPresenter implements IBaseAPIService, IBasePresenter, Ar
         Log.d("Called URL", serviceCall.request().url().toString());
         RetrofitService.enqueueWithRetry(serviceCall, this);*/
 
+        view.get().showLoader();
         ApiClient.getApiInterface().getAllArticles(API_KEY)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -55,27 +52,24 @@ public class ArticleViewPresenter implements IBaseAPIService, IBasePresenter, Ar
                 .subscribe(new DisposableSingleObserver<ArrayList<Article>>() {
                     @Override
                     public void onSuccess(ArrayList<Article> articles) {
+                        articlesList = articles;
                         ((IArticleView) view.get()).articleLoaded(articles);
+                        view.get().hideLoader();
                     }
 
                     @Override
                     public void onError(Throwable e) {
                         view.get().onError(new Error(e));
+                        view.get().hideLoader();
                     }
                 });
     }
 
     @Override
-    public void onSuccess(JsonElement result) throws JSONException {
-        Log.d("Response", result.toString());
-
-        //((IArticleView) view.get()).articleLoaded(result);
+    public void onItemClicked(int pos) {
+        ((IArticleView) view.get()).startArticleDetailsActivity(articlesList.get(pos));
     }
 
-    @Override
-    public void onError(Error error) {
-        view.get().onError(error);
-    }
 
     @Override
     public void onDestroy() {
@@ -87,4 +81,6 @@ public class ArticleViewPresenter implements IBaseAPIService, IBasePresenter, Ar
 
 interface ArticleViewContract {
     void loadArticleList();
+
+    void onItemClicked(int pos);
 }

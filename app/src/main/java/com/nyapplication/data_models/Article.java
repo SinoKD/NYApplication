@@ -2,6 +2,8 @@ package com.nyapplication.data_models;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
+
 /**
  * @author Sino K D
  * @since 8/2/18.
@@ -17,6 +19,7 @@ public class Article {
     private String articleAbstract;
     private String published_date;
     private String source;
+    private ArrayList<Media> media;
 
 
     public String getUrl() {
@@ -81,5 +84,13 @@ public class Article {
 
     public void setPublished_date(String published_date) {
         this.published_date = published_date;
+    }
+
+    public ArrayList<Media> getMedia() {
+        return media;
+    }
+
+    public void setMedia(ArrayList<Media> media) {
+        this.media = media;
     }
 }

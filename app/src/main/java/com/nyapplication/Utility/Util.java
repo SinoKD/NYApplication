@@ -5,6 +5,11 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
 import java.lang.reflect.Method;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+import java.util.TimeZone;
 
 /**
  * @author Sino K D
@@ -50,5 +55,37 @@ public class Util {
         }
 
         return haveConnectedWifi || haveConnectedMobile;
+    }
+
+
+    public static String convertUTI(String time) {
+
+
+        if (time != null && !time.isEmpty()) {
+            String inputPattern = "yyyy-MM-dd";
+            String outputPattern = "MMM. dd, yyyy";
+            SimpleDateFormat inputFormat = new SimpleDateFormat(inputPattern, Locale.ENGLISH);
+            inputFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+            SimpleDateFormat outputFormat = new SimpleDateFormat(outputPattern, Locale.ENGLISH);
+            outputFormat.setTimeZone(TimeZone.getDefault());
+
+            Date date = null;
+            String str = null;
+
+            try {
+                date = inputFormat.parse(time);
+                str = outputFormat.format(date);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+           /* if (str != null && !str.isEmpty()) {
+                str = str.replaceFirst(" ", getDayOfMonthSuffix(date.getDate()) + " ");
+            }*/
+
+            return str;
+        } else {
+            return "";
+        }
     }
 }

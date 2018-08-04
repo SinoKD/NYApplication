@@ -2,4 +2,10 @@
     <string name="app_name">NyApplication</string>
     <string name="title_hint_label">Title</string>
     <string name="author_label_hint">Author</string>
+    <string name="article_list_activity_label">Most Viewed</string>
+    <string name="read_more">Read More</string>
+    <string name="image_caption_label">image caption</string>
+    <string name="copy_right_label">copy right</string>
+    <string name="published_date_label">published date</string>
+    <string name="abstract_label">abstract</string>
 </resources>
