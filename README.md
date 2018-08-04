@@ -17,10 +17,10 @@ JSON (`.json`, default)
 
 Prerequisites
 --------------
-
+- Android Studio 3.1.2
+- Latest Android Build Tools
 - minSdkVersion 21
 - targetSdkVersion 28
-- Latest Android Build Tools
 - Android Support Repository
 - Dagger (Depedency Injection)
 - Retrofit
@@ -32,7 +32,7 @@ Getting started
 This sample uses the Gradle build system.
 
 Download the samples by cloning this repository or downloading an archived snapshot. (See the options at the top of the page.)
-In Android Studio, create a new project and choose the "Import non-Android Studio project" or "Import Project" option.
+Import the project in Android studio and sync all dependencies.
 Generate a API key form [Newyork Times Developers](https://developer.nytimes.com/signup) and replace your key with API_KEY feild in AppConstants.java
 Run the application with connected device or emulator
 
