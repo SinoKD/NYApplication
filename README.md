@@ -25,6 +25,7 @@ Prerequisites
 - Dagger (Depedency Injection)
 - Retrofit
 - RxAndroid
+- Mockito
 
 Getting started
 ---------------
@@ -38,3 +39,6 @@ Run the application with connected device or emulator
 
 ## Architecture Pattern
 The application make use of MPV architecture pattern.
+
+## Unit Testing
+Unit test using android Mockito Framework.
