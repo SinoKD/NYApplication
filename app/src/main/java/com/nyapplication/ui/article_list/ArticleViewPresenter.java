@@ -32,12 +32,12 @@ public class ArticleViewPresenter implements IBasePresenter, ArticleViewContract
 
     private ArrayList<Article> articlesList;
 
+    public void setArticlesList(ArrayList<Article> articlesList) {
+        this.articlesList = articlesList;
+    }
+
     @Override
     public void loadArticleList() {
-
-       /* Call serviceCall = ApiClient.getApiInterface().getAllUsers(API_KEY);
-        Log.d("Called URL", serviceCall.request().url().toString());
-        RetrofitService.enqueueWithRetry(serviceCall, this);*/
 
         view.get().showLoader();
         ApiClient.getApiInterface().getAllArticles(API_KEY)
@@ -67,16 +67,17 @@ public class ArticleViewPresenter implements IBasePresenter, ArticleViewContract
 
     @Override
     public void onItemClicked(int pos) {
-        ((IArticleView) view.get()).startArticleDetailsActivity(articlesList.get(pos));
+        ((IArticleView) view.get()).startArticleDetailsActivity(getItemAtPos(pos));
     }
 
+    public Article getItemAtPos(int pos) {
+        return articlesList.get(pos);
+    }
 
     @Override
     public void onDestroy() {
         view = null;
     }
-
-
 }
 
 interface ArticleViewContract {
