@@ -14,6 +14,11 @@ import com.nyapplication.data_models.MediaMetaData;
 
 import java.util.ArrayList;
 
+/**
+ * @author Sino K D
+ * @since 8/4/18.
+ * Viewpager image slide animation
+ */
 public class SlidingImage_Adapter extends PagerAdapter {
 
 

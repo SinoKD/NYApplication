@@ -17,6 +17,7 @@ import com.nyapplication.data_models.Article;
 import java.util.ArrayList;
 
 /**
+ * Load the article collection to recycler view.
  * @author Sino K D
  * @since 8/3/18.
  */

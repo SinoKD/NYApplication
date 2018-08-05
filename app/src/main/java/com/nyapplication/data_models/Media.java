@@ -4,6 +4,14 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 
+/**
+ * @author Sino K D
+ * @since 8/3/18.
+ * <p>
+ * Model object to handle Media data.
+ * </p>
+ */
+
 public class Media {
 
     private String type;

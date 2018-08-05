@@ -13,7 +13,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.article_list.ArticleListActivity"
+        <activity
+            android:name=".ui.article_list.ArticleListActivity"
             android:label="@string/article_list_activity_label">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,7 +22,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.article_details.ArticleDetails"></activity>
+        <activity
+            android:name=".ui.article_details.ArticleDetails"
+            android:label="@string/article_list_activity_label"></activity>
     </application>
 
 </manifest>

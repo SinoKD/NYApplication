@@ -1,15 +1,21 @@
 package com.nyapplication.ui.article_list;
 
+import android.content.Context;
+
+import com.nyapplication.Utility.PreferenceManager;
 import com.nyapplication.data_models.Article;
 import com.nyapplication.data_models.ArticleListResponse;
 import com.nyapplication.data_models.Error;
 import com.nyapplication.ui.Base.IBasePresenter;
 import com.nyapplication.ui.Base.IBaseView;
-import com.nyapplication.web_service.ApiClient;
+import com.nyapplication.web_service.APIInterface;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 
+import javax.inject.Inject;
+
+import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Function;
 import io.reactivex.observers.DisposableSingleObserver;
@@ -19,15 +25,22 @@ import static com.nyapplication.Utility.AppConstants.APIConstants.API_KEY;
 
 
 /**
+ * Article list presenter provide all data needed for ArticleListActivity.Java
+ *
  * @author Sino K D
  * @since 8/3/18.
  */
 public class ArticleViewPresenter implements IBasePresenter, ArticleViewContract {
 
     private WeakReference<IBaseView> view;
+    private APIInterface apiInterface;
+    private PreferenceManager preferenceManager;
 
-    public ArticleViewPresenter(IBaseView view) {
+    @Inject
+    public ArticleViewPresenter(IBaseView view, APIInterface apiInterface) {
         this.view = new WeakReference<IBaseView>(view);
+        this.apiInterface = apiInterface;
+        preferenceManager = PreferenceManager.getInstance();
     }
 
     private ArrayList<Article> articlesList;
@@ -36,11 +49,15 @@ public class ArticleViewPresenter implements IBasePresenter, ArticleViewContract
         this.articlesList = articlesList;
     }
 
+    /**
+     * Fetch articles from server.
+     */
     @Override
     public void loadArticleList() {
 
         view.get().showLoader();
-        ApiClient.getApiInterface().getAllArticles(API_KEY)
+
+        getApiResponseHandler()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .map(new Function<ArticleListResponse, ArrayList<Article>>() {
@@ -65,11 +82,43 @@ public class ArticleViewPresenter implements IBasePresenter, ArticleViewContract
                 });
     }
 
+    /**
+     * Returns Observable based the user preference.
+     *
+     * @return Observable based the user preference
+     */
+    private Single<ArticleListResponse> getApiResponseHandler() {
+
+        int period = preferenceManager.getApiPeriod();
+        switch (period) {
+            case 1:
+                return apiInterface.getAllArticles1days(API_KEY);
+            case 7:
+                return apiInterface.getAllArticles7days(API_KEY);
+            case 30:
+                return apiInterface.getAllArticles30days(API_KEY);
+
+            default:
+                return apiInterface.getAllArticles7days(API_KEY);
+        }
+    }
+
+    /**
+     * Intimate the view with requested article.
+     *
+     * @param pos selected position.
+     */
     @Override
     public void onItemClicked(int pos) {
         ((IArticleView) view.get()).startArticleDetailsActivity(getItemAtPos(pos));
     }
 
+    /**
+     * Returns the article from collection
+     *
+     * @param pos position of the article
+     * @return article at requested position.
+     */
     public Article getItemAtPos(int pos) {
         return articlesList.get(pos);
     }

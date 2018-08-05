@@ -4,6 +4,7 @@ import com.nyapplication.data_models.Article;
 import com.nyapplication.ui.article_list.ArticleListActivity;
 import com.nyapplication.ui.article_list.ArticleViewPresenter;
 import com.nyapplication.ui.article_list.IArticleView;
+import com.nyapplication.web_service.APIInterface;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -24,6 +25,9 @@ public class ArticleListTest {
     public MockitoRule mockitoRule = MockitoJUnit.rule();
 
     @Mock
+    APIInterface apiInterface;
+
+    @Mock
     ArticleListActivity articleListActivity;
 
     ArticleViewPresenter articleViewPresenter;
@@ -32,7 +36,7 @@ public class ArticleListTest {
 
     @Before
     public void setUp() {
-        articleViewPresenter = new ArticleViewPresenter(articleListActivity);
+        articleViewPresenter = new ArticleViewPresenter(articleListActivity, apiInterface);
         articles.add(new Article());
         articles.add(new Article());
         articles.add(new Article());

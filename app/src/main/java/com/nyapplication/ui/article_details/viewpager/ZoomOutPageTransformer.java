@@ -3,6 +3,11 @@ package com.nyapplication.ui.article_details.viewpager;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 
+/**
+ * @author Sino K D
+ * @since 8/3/18.
+ *Viewpager image slide animation.
+ */
 public class ZoomOutPageTransformer implements ViewPager.PageTransformer {
     private static final float MIN_SCALE = 0.85f;
     private static final float MIN_ALPHA = 0.5f;

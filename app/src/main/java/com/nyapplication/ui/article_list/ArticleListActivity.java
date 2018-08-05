@@ -6,14 +6,17 @@ import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.nyapplication.R;
+import com.nyapplication.Utility.PreferenceManager;
 import com.nyapplication.data_models.Article;
 import com.nyapplication.ui.Base.BaseDaggerActivity;
 import com.nyapplication.ui.article_details.ArticleDetails;
@@ -23,11 +26,18 @@ import java.util.ArrayList;
 
 import javax.inject.Inject;
 
+/**
+ * @author Sino K D
+ * @since 8/4/18.
+ * Present the article list to user.
+ */
+
 public class ArticleListActivity extends BaseDaggerActivity implements IArticleView, SwipeRefreshLayout.OnRefreshListener {
 
     @Inject
     ArticleViewPresenter articleViewPresenter;
 
+    //Toolbar toolbar;
     private RecyclerView recyclerView;
     private LinearLayoutManager mLayoutManager;
     private SwipeRefreshLayout swipeRefreshLayout;
@@ -37,6 +47,9 @@ public class ArticleListActivity extends BaseDaggerActivity implements IArticleV
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_article_list);
+
+        /*toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);*/
 
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.ll_swipe_refresh);
         swipeRefreshLayout.setOnRefreshListener(this);
@@ -54,8 +67,7 @@ public class ArticleListActivity extends BaseDaggerActivity implements IArticleV
 
             @Override
             public void onItemClick(View view, int position) {
-                Toast.makeText(getApplicationContext(), "position:-" + position, Toast.LENGTH_SHORT).show();
-
+                //intimate the presenter the recycler view item clicked.
                 articleViewPresenter.onItemClicked(position);
             }
 
@@ -66,6 +78,11 @@ public class ArticleListActivity extends BaseDaggerActivity implements IArticleV
         }));
     }
 
+    /**
+     * Function get called from presenter when articles fetched through web Api service.
+     *
+     * @param articles collection loaded from server.
+     */
     @Override
     public void articleLoaded(ArrayList<Article> articles) {
         Log.d("Article Size", articles.size() + "");
@@ -75,6 +92,11 @@ public class ArticleListActivity extends BaseDaggerActivity implements IArticleV
         runLayoutAnimation(recyclerView);
     }
 
+    /**
+     * Start the article details screen to view more details.
+     *
+     * @param article selected artilce.
+     */
     @Override
     public void startArticleDetailsActivity(Article article) {
 
@@ -89,6 +111,11 @@ public class ArticleListActivity extends BaseDaggerActivity implements IArticleV
         super.onDestroy();
     }
 
+    /**
+     * function to run the recycler view load animation
+     *
+     * @param recyclerView
+     */
     private void runLayoutAnimation(final RecyclerView recyclerView) {
         final Context context = recyclerView.getContext();
 
@@ -106,5 +133,35 @@ public class ArticleListActivity extends BaseDaggerActivity implements IArticleV
         if (articleViewPresenter != null)
             articleViewPresenter.loadArticleList();
 
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.period_prefs_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.period_1:
+                PreferenceManager.getInstance().setApiPeriod(1);
+                articleViewPresenter.loadArticleList();
+                break;
+
+            case R.id.period_7:
+                PreferenceManager.getInstance().setApiPeriod(7);
+                articleViewPresenter.loadArticleList();
+                break;
+            case R.id.period_30:
+                PreferenceManager.getInstance().setApiPeriod(30);
+                articleViewPresenter.loadArticleList();
+                break;
+
+        }
+
+        return true;
     }
 }

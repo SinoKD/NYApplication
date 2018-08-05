@@ -8,7 +8,9 @@ import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 
-import static com.nyapplication.Utility.AppConstants.APIConstants.TOP_VIEWED;
+import static com.nyapplication.Utility.AppConstants.APIConstants.TOP_VIEWED_1Days;
+import static com.nyapplication.Utility.AppConstants.APIConstants.TOP_VIEWED_30Days;
+import static com.nyapplication.Utility.AppConstants.APIConstants.TOP_VIEWED_7Days;
 
 /**
  * APIInterface.java to define all API end points.
@@ -19,9 +21,15 @@ import static com.nyapplication.Utility.AppConstants.APIConstants.TOP_VIEWED;
 
 public interface APIInterface {
 
-    @GET(TOP_VIEWED)
+    @GET(TOP_VIEWED_7Days)
     Call<JsonElement> getAllUsers(@Query("api_key") String apiKey);
 
-    @GET(TOP_VIEWED)
-    Single<ArticleListResponse> getAllArticles(@Query("api_key") String apiKey);
+    @GET(TOP_VIEWED_7Days)
+    Single<ArticleListResponse> getAllArticles7days(@Query("api_key") String apiKey);
+
+    @GET(TOP_VIEWED_1Days)
+    Single<ArticleListResponse> getAllArticles1days(@Query("api_key") String apiKey);
+
+    @GET(TOP_VIEWED_30Days)
+    Single<ArticleListResponse> getAllArticles30days(@Query("api_key") String apiKey);
 }

@@ -1,5 +1,12 @@
 package com.nyapplication.data_models;
 
+/**
+ * @author Sino K D
+ * @since 8/3/18.
+ * <p>
+ * Model object to handle media meta data.
+ * </p>
+ */
 public class MediaMetaData {
 
     private String url;

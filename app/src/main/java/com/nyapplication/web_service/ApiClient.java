@@ -42,7 +42,6 @@ public class ApiClient {
             OkHttpClient okHttpClient = new OkHttpClient().newBuilder()
                     .connectTimeout(TIME_OUT_IN_MS, TimeUnit.MILLISECONDS)
                     .readTimeout(TIME_OUT_IN_MS, TimeUnit.MILLISECONDS)
-                    .addInterceptor(new ConnectivityInterceptor(MyApplication.getInstance().getApplicationContext()))
                     .addInterceptor(interceptor)
                     .build();
 

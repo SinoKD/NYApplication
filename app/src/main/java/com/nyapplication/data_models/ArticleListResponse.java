@@ -7,6 +7,8 @@ import java.util.ArrayList;
 /**
  * @author Sino K D
  * @since 8/3/18.
+ *
+ * Model object handling the API response
  */
 public class ArticleListResponse extends BaseApiResponse {
 

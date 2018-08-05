@@ -4,7 +4,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
- * Created by fts012 on 01/07/16.
+ * @author Sino K D
+ * @since 8/3/18.
+ * <p>
+ * Model object to handle the API error messages.
+ * </p>
  */
 public class Error {
 

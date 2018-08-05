@@ -33,6 +33,7 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 
+    implementation "com.android.support:design:$supportLibVersion"
     implementation "com.android.support:support-v4:$supportLibVersion"
     implementation "com.android.support:appcompat-v7:$supportLibVersion"
     implementation "com.android.support:recyclerview-v7:$supportLibVersion"
@@ -68,7 +69,7 @@ dependencies {
     }
 
     // required if you want to use Mockito for unit tests
-    testCompile 'org.mockito:mockito-core:2.7.22'
+    testImplementation 'org.mockito:mockito-core:2.7.22'
     // required if you want to use Mockito for Android tests
-    androidTestCompile 'org.mockito:mockito-android:2.7.22'
+    androidTestImplementation 'org.mockito:mockito-android:2.7.22'
 }

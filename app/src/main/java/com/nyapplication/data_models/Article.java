@@ -7,6 +7,8 @@ import java.util.ArrayList;
 /**
  * @author Sino K D
  * @since 8/2/18.
+ *
+ * Model object for handling article details.
  */
 public class Article {
 
