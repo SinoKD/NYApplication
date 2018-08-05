@@ -44,3 +44,7 @@ At the end of the screen there is 'Read More' link to read more about the articl
 
 ## Architecture Pattern
 The application make use of MPV architecture pattern.
+
+## License
+
+Please see the [LICENSE.md](https://github.com/SinoKD/NyApplication/blob/master/LICENSE) file for details
