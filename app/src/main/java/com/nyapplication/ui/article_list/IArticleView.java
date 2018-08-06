@@ -7,4 +7,6 @@ import java.util.ArrayList;
 
 public interface IArticleView extends IBaseView {
     void articleLoaded(ArrayList<Article> articles);
+
+    void startArticleDetailsActivity(Article article);
 }

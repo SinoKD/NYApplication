@@ -1,10 +1,27 @@
 package com.nyapplication.di;
 
+import com.nyapplication.Utility.PreferenceManager;
+import com.nyapplication.ui.MyApplication;
+import com.nyapplication.web_service.APIInterface;
+import com.nyapplication.web_service.ApiClient;
+
+import javax.inject.Singleton;
+
+import dagger.Binds;
 import dagger.Module;
+import dagger.Provides;
 
 /**
- * Created by Sino on 1/16/18.
+ * @author Sino K D
+ * @since 8/3/18.
  */
 @Module
 public abstract class AppModule {
+
+    @Singleton
+    @Provides
+    static APIInterface provideAPIInterface() {
+        return ApiClient.getApiInterface();
+    }
+
 }

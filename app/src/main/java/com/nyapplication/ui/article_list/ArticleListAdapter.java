@@ -6,14 +6,18 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.nyapplication.R;
+import com.nyapplication.Utility.Util;
 import com.nyapplication.data_models.Article;
 
 import java.util.ArrayList;
 
 /**
+ * Load the article collection to recycler view.
  * @author Sino K D
  * @since 8/3/18.
  */
@@ -34,7 +38,7 @@ public class ArticleListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         View view = null;
 
         inflater = (LayoutInflater) parent.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        view = inflater.inflate(R.layout.list_item_article, parent, false);
+        view = inflater.inflate(R.layout.item_cell, parent, false);
         ArticleItemHolder deviceItemHolder = new ArticleItemHolder(view);
         return deviceItemHolder;
 
@@ -47,7 +51,16 @@ public class ArticleListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
         deviceItemHolder.tvTitle.setText(article.getTitle());
         deviceItemHolder.tvAuthor.setText(article.getByline());
-        deviceItemHolder.tvPublishedDate.setText(article.getPublished_date());
+        deviceItemHolder.tvPublishedDate.setText(Util.convertUTI(article.getPublished_date()));
+
+        if (article.getMedia() != null) {
+            if (article.getMedia().get(0).getMedia_metadata() != null) {
+
+                Glide.with(context)
+                        .load(article.getMedia().get(0).getMedia_metadata().get(0).getUrl())
+                        .into(deviceItemHolder.imgThumb);
+            }
+        }
     }
 
 
@@ -58,6 +71,7 @@ public class ArticleListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     private static class ArticleItemHolder extends RecyclerView.ViewHolder {
 
+        ImageView imgThumb;
         TextView tvTitle;
         TextView tvAuthor;
         TextView tvPublishedDate;
@@ -66,6 +80,7 @@ public class ArticleListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         public ArticleItemHolder(View itemView) {
             super(itemView);
 
+            imgThumb = itemView.findViewById(R.id.img_thumb);
             tvTitle = (TextView) itemView.findViewById(R.id.tv_article_title);
             tvAuthor = (TextView) itemView.findViewById(R.id.tv_article_author);
             tvPublishedDate = (TextView) itemView.findViewById(R.id.tv_article_date);

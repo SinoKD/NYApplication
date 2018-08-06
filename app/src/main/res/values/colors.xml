@@ -7,4 +7,5 @@
     <color name="medium_grey">#FFA2A2A2</color>
     <color name="colorBlack">#000</color>
     <color name="colorWhite">#fff</color>
+    <color name="article_list_bg">#dedede</color>
 </resources>
