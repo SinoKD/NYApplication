@@ -6,4 +6,5 @@
     <color name="colorInputBoxBg">#c23e3e3e</color>
     <color name="medium_grey">#FFA2A2A2</color>
     <color name="colorBlack">#000</color>
+    <color name="colorWhite">#fff</color>
 </resources>
