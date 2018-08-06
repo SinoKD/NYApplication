@@ -13,15 +13,6 @@ import dagger.android.DaggerApplication;
 
 public class MyApplication extends DaggerApplication {
 
-
-    private static MyApplication mInstance;
-
-    @Override
-    public void onCreate() {
-        super.onCreate();
-        mInstance = this;
-    }
-
     @Override
     protected AndroidInjector<? extends DaggerApplication> applicationInjector() {
         AppComponent appComponent = DaggerAppComponent.builder().application(this).build();
@@ -29,7 +20,4 @@ public class MyApplication extends DaggerApplication {
         return appComponent;
     }
 
-    public static synchronized MyApplication getInstance() {
-        return mInstance;
-    }
 }

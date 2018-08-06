@@ -2,6 +2,8 @@ package com.nyapplication.di;
 
 import android.app.Application;
 
+import com.nyapplication.ui.MyApplication;
+
 import javax.inject.Singleton;
 
 import dagger.BindsInstance;
@@ -22,6 +24,8 @@ import dagger.android.support.AndroidSupportInjectionModule;
         AppModule.class})
 
 public interface AppComponent extends AndroidInjector<DaggerApplication> {
+
+    void inject(MyApplication app);
 
     @Override
     void inject(DaggerApplication instance);

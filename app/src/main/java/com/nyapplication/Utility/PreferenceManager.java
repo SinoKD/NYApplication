@@ -3,8 +3,6 @@ package com.nyapplication.Utility;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.nyapplication.ui.MyApplication;
-
 import javax.inject.Inject;
 
 /**
@@ -23,18 +21,18 @@ public class PreferenceManager {
     SharedPreferences sharedPreferences; //preference object
     SharedPreferences.Editor editor; //preference editor object
 
-    private PreferenceManager() {
-        this.context = MyApplication.getInstance();
+    @Inject
+    public PreferenceManager(Context context) {
         sharedPreferences = context.getSharedPreferences(PREFERENCE_FILE_NAME, 0);
         editor = sharedPreferences.edit();
     }
 
-    public static PreferenceManager getInstance() {
+    /*public static PreferenceManager getInstance() {
         if (preferenceManager == null) {
             preferenceManager = new PreferenceManager();
         }
         return preferenceManager;
-    }
+    }*/
 
     public void setApiPeriod(int apiPeriod) {
         editor.putInt(API_PERIOD, apiPeriod);

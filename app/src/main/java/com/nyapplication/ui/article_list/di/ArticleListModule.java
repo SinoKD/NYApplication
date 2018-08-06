@@ -1,7 +1,6 @@
 package com.nyapplication.ui.article_list.di;
 
 import com.nyapplication.Utility.PreferenceManager;
-import com.nyapplication.ui.MyApplication;
 import com.nyapplication.ui.article_list.ArticleListActivity;
 import com.nyapplication.ui.article_list.ArticleViewPresenter;
 import com.nyapplication.ui.article_list.IArticleView;
@@ -20,8 +19,8 @@ import dagger.Provides;
 public abstract class ArticleListModule {
 
     @Provides
-    static ArticleViewPresenter provideArticleViewPresenter(IArticleView mainView, APIInterface apiInterface) {
-        return new ArticleViewPresenter(mainView, apiInterface);
+    static ArticleViewPresenter provideArticleViewPresenter(IArticleView mainView, APIInterface apiInterface,PreferenceManager preferenceManager) {
+        return new ArticleViewPresenter(mainView, apiInterface,preferenceManager);
     }
 
     @Binds

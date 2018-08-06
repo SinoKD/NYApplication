@@ -61,15 +61,15 @@ dependencies {
     implementation "com.squareup.okhttp3:logging-interceptor:3.4.1"
 
     //Glide
-    implementation 'com.github.bumptech.glide:glide:4.7.1'
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.7.1'
+    implementation "com.github.bumptech.glide:glide:$glide_version"
+    annotationProcessor "com.github.bumptech.glide:compiler:$glide_version"
 
     implementation('com.github.JakeWharton:ViewPagerIndicator:2.4.1') {
         exclude module: 'support-v4'
     }
 
     // required if you want to use Mockito for unit tests
-    testImplementation 'org.mockito:mockito-core:2.7.22'
+    testImplementation "org.mockito:mockito-core:$mockito_version"
     // required if you want to use Mockito for Android tests
-    androidTestImplementation 'org.mockito:mockito-android:2.7.22'
+    androidTestImplementation "org.mockito:mockito-android:$mockito_version"
 }

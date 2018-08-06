@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -36,6 +35,9 @@ public class ArticleListActivity extends BaseDaggerActivity implements IArticleV
 
     @Inject
     ArticleViewPresenter articleViewPresenter;
+
+    @Inject
+    PreferenceManager preferenceManager;
 
     //Toolbar toolbar;
     private RecyclerView recyclerView;
@@ -147,16 +149,16 @@ public class ArticleListActivity extends BaseDaggerActivity implements IArticleV
 
         switch (item.getItemId()) {
             case R.id.period_1:
-                PreferenceManager.getInstance().setApiPeriod(1);
+               preferenceManager.setApiPeriod(1);
                 articleViewPresenter.loadArticleList();
                 break;
 
             case R.id.period_7:
-                PreferenceManager.getInstance().setApiPeriod(7);
+                preferenceManager.setApiPeriod(7);
                 articleViewPresenter.loadArticleList();
                 break;
             case R.id.period_30:
-                PreferenceManager.getInstance().setApiPeriod(30);
+                preferenceManager.setApiPeriod(30);
                 articleViewPresenter.loadArticleList();
                 break;
 

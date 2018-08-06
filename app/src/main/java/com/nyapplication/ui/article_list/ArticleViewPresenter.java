@@ -1,7 +1,5 @@
 package com.nyapplication.ui.article_list;
 
-import android.content.Context;
-
 import com.nyapplication.Utility.PreferenceManager;
 import com.nyapplication.data_models.Article;
 import com.nyapplication.data_models.ArticleListResponse;
@@ -37,10 +35,10 @@ public class ArticleViewPresenter implements IBasePresenter, ArticleViewContract
     private PreferenceManager preferenceManager;
 
     @Inject
-    public ArticleViewPresenter(IBaseView view, APIInterface apiInterface) {
+    public ArticleViewPresenter(IBaseView view, APIInterface apiInterface, PreferenceManager preferenceManager) {
         this.view = new WeakReference<IBaseView>(view);
         this.apiInterface = apiInterface;
-        preferenceManager = PreferenceManager.getInstance();
+        this.preferenceManager = preferenceManager;
     }
 
     private ArrayList<Article> articlesList;

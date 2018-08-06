@@ -28,6 +28,8 @@ ext {
     retrofitVersion = '2.2.0'
     dagger_version='2.13'
     rx_java_version='2.1.9'
+    mockito_version='2.7.22'
+    glide_version='4.7.1'
 }
 
 task clean(type: Delete) {

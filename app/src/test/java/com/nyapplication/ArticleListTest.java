@@ -1,5 +1,6 @@
 package com.nyapplication;
 
+import com.nyapplication.Utility.PreferenceManager;
 import com.nyapplication.data_models.Article;
 import com.nyapplication.ui.article_list.ArticleListActivity;
 import com.nyapplication.ui.article_list.ArticleViewPresenter;
@@ -28,6 +29,9 @@ public class ArticleListTest {
     APIInterface apiInterface;
 
     @Mock
+    PreferenceManager preferenceManager;
+
+    @Mock
     ArticleListActivity articleListActivity;
 
     ArticleViewPresenter articleViewPresenter;
@@ -36,7 +40,7 @@ public class ArticleListTest {
 
     @Before
     public void setUp() {
-        articleViewPresenter = new ArticleViewPresenter(articleListActivity, apiInterface);
+        articleViewPresenter = new ArticleViewPresenter(articleListActivity, apiInterface, preferenceManager);
         articles.add(new Article());
         articles.add(new Article());
         articles.add(new Article());
