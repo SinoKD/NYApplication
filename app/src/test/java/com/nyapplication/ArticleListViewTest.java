@@ -2,6 +2,7 @@ package com.nyapplication;
 
 import com.nyapplication.Utility.PreferenceManager;
 import com.nyapplication.data_models.Article;
+import com.nyapplication.data_models.ArticleListResponse;
 import com.nyapplication.ui.article_list.ArticleListActivity;
 import com.nyapplication.ui.article_list.ArticleViewPresenter;
 import com.nyapplication.ui.article_list.IArticleView;
@@ -19,8 +20,13 @@ import org.mockito.junit.MockitoRule;
 
 import java.util.ArrayList;
 
+import io.reactivex.Single;
+import io.reactivex.android.plugins.RxAndroidPlugins;
+import io.reactivex.schedulers.Schedulers;
+
 @RunWith(MockitoJUnitRunner.class)
-public class ArticleListTest {
+
+public class ArticleListViewTest {
 
     @Rule
     public MockitoRule mockitoRule = MockitoJUnit.rule();
@@ -36,20 +42,35 @@ public class ArticleListTest {
 
     ArticleViewPresenter articleViewPresenter;
 
+    Single<ArticleListResponse> articleListResponseSingle;
+
+    private ArticleListResponse articleListResponse;
     private ArrayList<Article> articles = new ArrayList<>();
 
     @Before
     public void setUp() {
+
+        RxAndroidPlugins.setInitMainThreadSchedulerHandler(scheduler -> Schedulers.trampoline());
+
         articleViewPresenter = new ArticleViewPresenter(articleListActivity, apiInterface, preferenceManager);
         articles.add(new Article());
         articles.add(new Article());
         articles.add(new Article());
-        articleViewPresenter.setArticlesList(articles);
+
+        articleListResponse = new ArticleListResponse();
+        articleListResponse.setArticles(articles);
+        articleViewPresenter.setArticlesList(articleListResponse.getArticles());
+
+        articleListResponseSingle = Single.just(articleListResponse);
     }
 
     @Test
     public void shouldPassArticlesToView() {
-        articleListActivity.articleLoaded(articles);
+
+        Mockito.when(articleViewPresenter.getApiResponseHandler()).thenReturn(articleListResponseSingle);
+        articleViewPresenter.loadArticleList();
+
+        Mockito.verify((IArticleView) articleListActivity).articleLoaded(articles);
     }
 
     @Test

@@ -85,7 +85,7 @@ public class ArticleViewPresenter implements IBasePresenter, ArticleViewContract
      *
      * @return Observable based the user preference
      */
-    private Single<ArticleListResponse> getApiResponseHandler() {
+    public Single<ArticleListResponse> getApiResponseHandler() {
 
         int period = preferenceManager.getApiPeriod();
         switch (period) {
