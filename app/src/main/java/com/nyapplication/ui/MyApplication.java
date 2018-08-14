@@ -19,5 +19,4 @@ public class MyApplication extends DaggerApplication {
         appComponent.inject(this);
         return appComponent;
     }
-
 }

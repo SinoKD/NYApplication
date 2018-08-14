@@ -2,7 +2,6 @@ package com.nyapplication.web_service;
 
 
 import com.nyapplication.BuildConfig;
-import com.nyapplication.ui.MyApplication;
 
 import java.util.concurrent.TimeUnit;
 
@@ -40,8 +39,9 @@ public class ApiClient {
             HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
             interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
             OkHttpClient okHttpClient = new OkHttpClient().newBuilder()
-                    .connectTimeout(TIME_OUT_IN_MS, TimeUnit.MILLISECONDS)
-                    .readTimeout(TIME_OUT_IN_MS, TimeUnit.MILLISECONDS)
+                    .connectTimeout(30, TimeUnit.SECONDS)
+                    .readTimeout(30, TimeUnit.SECONDS)
+                    .writeTimeout(30, TimeUnit.SECONDS)
                     .addInterceptor(interceptor)
                     .build();
 

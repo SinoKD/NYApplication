@@ -38,7 +38,7 @@ Run the application with connected device or emulator
 
 First view lists collection of most viewed articles for 7 days by default.
 We can change the value by using menu option(1,7,30).
-when we click the artilce then load the details screen.
+when we click the article then load the details screen.
 At the end of the screen there is 'Read More' link to read more about the article in web browswer or in Newyork Times App.
  
 

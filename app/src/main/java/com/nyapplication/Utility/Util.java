@@ -78,11 +78,6 @@ public class Util {
             } catch (ParseException e) {
                 e.printStackTrace();
             }
-
-           /* if (str != null && !str.isEmpty()) {
-                str = str.replaceFirst(" ", getDayOfMonthSuffix(date.getDate()) + " ");
-            }*/
-
             return str;
         } else {
             return "";

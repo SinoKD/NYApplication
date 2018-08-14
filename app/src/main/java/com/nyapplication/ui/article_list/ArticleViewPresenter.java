@@ -15,7 +15,6 @@ import javax.inject.Inject;
 
 import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.functions.Function;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
 
@@ -58,12 +57,7 @@ public class ArticleViewPresenter implements IBasePresenter, ArticleViewContract
         getApiResponseHandler()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .map(new Function<ArticleListResponse, ArrayList<Article>>() {
-                    @Override
-                    public ArrayList<Article> apply(ArticleListResponse articleListResponse) throws Exception {
-                        return articleListResponse.getArticles();
-                    }
-                })
+                .map(articleListResponse -> articleListResponse.getArticles())
                 .subscribe(new DisposableSingleObserver<ArrayList<Article>>() {
                     @Override
                     public void onSuccess(ArrayList<Article> articles) {

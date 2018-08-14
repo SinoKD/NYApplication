@@ -50,7 +50,7 @@ public class ArticleListViewTest {
     @Before
     public void setUp() {
 
-        RxAndroidPlugins.setInitMainThreadSchedulerHandler(scheduler -> Schedulers.trampoline());
+        RxAndroidPlugins.setInitMainThreadSchedulerHandler(Scheduler -> Schedulers.trampoline());
 
         articleViewPresenter = new ArticleViewPresenter(articleListActivity, apiInterface, preferenceManager);
         articles.add(new Article());

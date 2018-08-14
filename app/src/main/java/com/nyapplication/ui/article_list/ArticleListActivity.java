@@ -44,14 +44,10 @@ public class ArticleListActivity extends BaseDaggerActivity implements IArticleV
     private LinearLayoutManager mLayoutManager;
     private SwipeRefreshLayout swipeRefreshLayout;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_article_list);
-
-        /*toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);*/
 
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.ll_swipe_refresh);
         swipeRefreshLayout.setOnRefreshListener(this);
